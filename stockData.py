@@ -41,7 +41,7 @@ def get_data_by_symbol(symbol):
         EPS_back_year.append(res_data["series"]["annual"]["eps"][3]["v"])
         EPS_back_year.append(res_data["series"]["annual"]["eps"][4]["v"])
         EPS_average = round(statistics.mean(EPS_back_year),4)
-        EPS_5 = (EPS-EPS_average)
+        EPS_5 = abs((EPS-EPS_average))
         EPS_5 = round(EPS_5/EPS_average,4)
     if is_calculated == False:
         EPS_5 = EPS_5/100+1
@@ -53,6 +53,17 @@ def get_data_by_symbol(symbol):
 
     _intrinsicVal_3Y = round(EPS*EPS_3*PE,2)
     _intrinsicVal_5Y = round(EPS*EPS_5*PE,2)
+
+ 
+    print('symbol ----------------------------|' + str(symbol))
+    print('EPS -------------------------------|' + str(EPS))
+    print('EPS_3 -----------------------------|' + str(EPS_3))
+    print('EPS_5 -----------------------------|' + str(EPS_5))
+    print('P/E -------------------------------|' + str(PE))
+    print('IntrinsicVal 3 Year ---------------|$' + str(_intrinsicVal_3Y))
+    print('IntrinsicVal 5 Year ---------------|$' + str(_intrinsicVal_5Y))
+    exit()
+
 
     res_data = finnhub_client.quote(symbol) #-------> get quates http request.
     current_close_price = res_data["c"]
@@ -68,13 +79,7 @@ def get_data_by_symbol(symbol):
     gain_3Y_percent = round((1-gain_3Y_percent)*100,2)
     gain_5Y_percent = round((1-gain_5Y_percent)*100,2)
 
-    print('symbol ----------------------------' + str(symbol))
-    print('EPS -------------------------------' + str(EPS))
-    print('EPS_3 -----------------------------' + str(EPS_3))
-    print('EPS_5 -----------------------------' + str(EPS_5))
-    print('P/E -------------------------------' + str(PE))
-    print('IntrinsicVal 3 Year -------------- $' + str(_intrinsicVal_3Y))
-    print('IntrinsicVal 5 Year -------------- $' + str(_intrinsicVal_5Y))
+
     print('current_close_price -------------- $'+str(current_close_price))
     print('gain_3Y -------------------------- $'+str(gain_3Y))
     print('gain_5Y -------------------------- $'+str(gain_5Y))
@@ -85,7 +90,7 @@ def get_data_by_symbol(symbol):
 
 
 def get_data_by_arr():
-    symbols = ['AAP','EBAY','AAPL']
+    symbols = ['F']
     for symbol in symbols:
         get_data_by_symbol(symbol)
 
